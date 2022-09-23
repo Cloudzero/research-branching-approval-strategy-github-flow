@@ -21,6 +21,7 @@ jobs:
   deploy-alfa:
     name: Deploy to Alfa
     needs: build-and-test
+    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: alfa
     steps:
