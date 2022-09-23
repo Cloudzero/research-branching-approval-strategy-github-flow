@@ -15,7 +15,7 @@ jobs:
 
   build-and-test:
     name: Build and Test
-    uses: ${{ env.GITHUB_REPOSITORY }}/.github/workflows/_build_test.yaml@main
+    uses: ./.github/workflows/_build_test.yaml@main
 
   deploy-alfa:
     name: Deploy to Alfa
