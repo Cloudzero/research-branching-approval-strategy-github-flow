@@ -15,7 +15,7 @@ jobs:
 
   build-and-test:
     name: Build and Test
-    uses: ./.github/workflows/_build_test.yaml@main
+    uses: ./.github/workflows/_build_test.yaml
 
   deploy-alfa:
     name: Deploy to Alfa
