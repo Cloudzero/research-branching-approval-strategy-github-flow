@@ -11,8 +11,8 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ env.GITHUB_REPOSITORY}}
-      - run: echo ${{ env }}
+      - run: echo "${{ env.GITHUB_REPOSITORY}}"
+      - run: echo "${{ env }}"
 
   build-and-test:
     name: Build and Test
