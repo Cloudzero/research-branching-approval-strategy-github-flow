@@ -11,8 +11,8 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ env.GITHUB_REPOSITORY}}
-      - run: echo ${{ env }}
+      - run: echo "${{ env.GITHUB_REPOSITORY}}"
+      - run: echo "${{ env }}"
 
   build-and-test:
     name: Build and Test
@@ -21,6 +21,7 @@ jobs:
   deploy-alfa:
     name: Deploy to Alfa
     needs: build-and-test
+    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: alfa
     steps:
