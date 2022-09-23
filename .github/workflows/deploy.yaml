@@ -1,0 +1,61 @@
+name: Build-Test-Deploy 
+
+on:
+  push:
+    branches:
+
+jobs:
+
+  build-and-test:
+    name: Build and Test
+    uses: cloudzero/research-branching-approval-strategy-deployment-release/.github/workflows/_build_test.yaml@main
+
+  deploy-alfa:
+    name: Deploy to Alfa
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    uses: alfa
+    steps:
+      - run: echo Deploy to Alfa
+
+  deploy-live:
+    name: Deploy to Live
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    uses: live
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: get fetch to update tags locally
+        run: git fetch --prune --unshallow --tags
+
+      - name: last tag
+        run: |
+          LAST_TAG=$(git describe HEAD --tags | grep -Eo "^v[0-9]+(\.[0-9]+)*")
+          echo "LAST_TAG=${LAST_TAG}"
+          echo "LAST_TAG=${LAST_TAG}" >> $GITHUB_ENV
+
+      - name: set up semver
+        uses: madhead/semver-utils@latest
+        id: version
+        with:
+          # A version to work with
+          version: ${{ env.LAST_TAG }}
+
+      - name: Get NEXT_TAG value
+        run: |
+          NEXT_TAG=${{ steps.version.outputs.inc-patch }}
+          echo "NEXT_TAG=${NEXT_TAG}"
+          echo "NEXT_TAG=${NEXT_TAG}" >> $GITHUB_ENV
+
+      - run: echo Deploy to Live
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: V${{ env.NEXT_TAG }}
+          tag_name: v${{ env.NEXT_TAG }}
