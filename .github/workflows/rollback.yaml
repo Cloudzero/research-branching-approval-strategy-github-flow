@@ -1,0 +1,23 @@
+name: Rollback
+
+on:
+  release:
+    types: [deleted]
+
+jobs:
+  deploy_latest:
+    runs-on: ubuntu-latest
+    steps:
+      - id: latest
+        uses: thebritican/fetch-latest-release@v1.0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v2
+        with: 
+          ref: ${{ steps.latest.outputs.tag_name }}
+      - name: get fetch to update tags locally
+        run: git fetch --prune --unshallow --tags
+
+      - id: deploy to live
+        run: Deploy to live

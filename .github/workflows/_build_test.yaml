@@ -1,0 +1,17 @@
+name: Build & Test
+
+on: workflow_call
+
+jobs:
+  build:
+    name: Build code
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Building the software
+
+  test:
+    name: Testing software
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Testing the software
