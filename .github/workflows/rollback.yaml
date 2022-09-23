@@ -19,5 +19,5 @@ jobs:
       - name: get fetch to update tags locally
         run: git fetch --prune --unshallow --tags
 
-      - name: deploy to live
-        run: Deploy to live
+      - id: deploy to live
+        run: echo Deploy to live
