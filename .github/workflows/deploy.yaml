@@ -9,13 +9,13 @@ jobs:
 
   build-and-test:
     name: Build and Test
-    uses: cloudzero/research-branching-approval-strategy-deployment-release/.github/workflows/_build_test.yaml@main
+    uses: ${{ env.GITHUB_REPOSITORY }}/.github/workflows/_build_test.yaml@main
 
   deploy-alfa:
     name: Deploy to Alfa
     needs: build-and-test
     runs-on: ubuntu-latest
-    uses: alfa
+    environment: alfa
     steps:
       - run: echo Deploy to Alfa
 
@@ -24,7 +24,7 @@ jobs:
     needs: build-and-test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    uses: live
+    environment: live
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
