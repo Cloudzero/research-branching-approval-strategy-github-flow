@@ -14,18 +14,20 @@ GitHib Flow is described as
 * Anything in the `main` branch is deployable
 * To work on something new create a descriptively named branch off of of `main`
 * Commit to that branch locally and regularly push your work to GitHub were it will be deployed to `alfa`
-* When work is cimplete and ready for `live`, start a pull request
-* After someone else has reviewed and signed off on the feature, it will more to `main` and kick of the automated CD pipeline.
-* the CD pipeline will build and test the code.  Here is will pause for a Deployment approval.
-* Once approved, the CD pipeline will continue and create a release, deploy to `live`, and tag the '`main' branch. 
+* When work is complete and ready for `live`, start a pull request
+* After someone else has reviewed and signed off on the feature, it will merge to `main` and kick off the automated CD pipeline.
+* The CD pipeline will build and test the code and then pause for a Deployment approval.
+* Once approved, the CD pipeline will continue and create a release, deploy to `live`, and tag the `main` branch.
 
 ## Knowing what is in each environment?
 
-What is in alfa or live will equate to the latest GutHub Release. The code in Alfa is the code from a pull request that resides in a deleted branch that is recoverable git GibHub UI. what is in `live` is what is on main that is tagged and in the release.
+What is in `live` and `alfa` is depicted in the "environments" section in the GitHub UI.
+![Main Page](assets/main-page-environments.png)
+![Environment detailed page showing deployments](assets/environment-detail.png)
 
 ## Rollbacks
 
 There are option here.  
 
-1) One is the release can be deleted created a new `latest` that ce be built and redeployed.
-2) A new branch and PR can be cut to fix andy issues.
+1) One is the release can be deleted. This kicks off a workflow to deploy the `latest` which is the previous code deployed via the tag being present.
+2) A new branch and PR can be cut to fix any issues.
