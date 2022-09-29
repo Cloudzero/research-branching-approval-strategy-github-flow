@@ -67,3 +67,5 @@ jobs:
         with:
           name: V${{ env.NEXT_TAG }}
           tag_name: v${{ env.NEXT_TAG }}
+          
+          
